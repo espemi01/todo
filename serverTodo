@@ -1,0 +1,10 @@
+*.onreadystatechange = function(){
+    //0  The request is not initialized
+    //1  The request has been set up
+    //2  The request  has been sent
+    //3  The request is in process
+    //4  The request is complete  **The one you care about.
+    if (*.readystate==4){
+        **Do Stuff**
+    }
+}

@@ -1,0 +1,317 @@
+<html>
+<head>
+<link rel=stylesheet href="todo.css" type="text/css">
+<title>Michael's To-Do list</title>
+
+<script type="text/javascript">
+	addNew = function(x, text, lst){
+
+        var weight = x;
+                
+        if (text == ''){
+            alert ("Please enter something in the box!");
+            return 1;
+        };
+
+		var cb = document.createElement("input");
+		cb.type="checkbox";
+		cb.name="checkbox";
+        cb.onclick = strike;
+		
+		var label = document.createElement('label');
+		label.id = weight;
+		label.appendChild(document.createTextNode(text));
+
+		var ul = document.getElementById(lst);
+		var newItem = document.createElement("li");
+		newItem.id = weight;
+        newItem.className = "itemLabel";
+        newItem.name = lst;
+
+		newItem.appendChild(cb);
+		var n = document.createTextNode(text);
+        n.name = "itemLabel";
+		newItem.appendChild(n);
+
+		ul.appendChild(newItem);
+		localSave();
+        return 1;
+	};
+
+	strike = function(){
+		var a = document.getElementsByClassName("itemLabel");
+        var b = document.getElementsByName("checkbox");
+
+		for (var i=0; i<b.length; i++){
+			if (b[i].checked){
+				if (a[i].id == 'high'){
+					a[i].id = 'Shigh';
+				};
+				if (a[i].id == 'med'){
+					a[i].id = 'Smed';
+				};
+				if (a[i].id == 'low'){
+					a[i].id = 'Slow';
+				};
+			};
+		};
+        
+        for (var i=0; i<b.length; i++){
+			if (!b[i].checked){
+				if (a[i].id == 'Shigh'){
+					a[i].id = 'high';
+				};
+				if (a[i].id == 'Smed'){
+					a[i].id = 'med';
+				};
+				if (a[i].id == 'Slow'){
+					a[i].id = 'low';
+				};
+			};
+		};
+    localSave();
+	return 1;
+	};
+    
+    
+    
+    localSave = function() {
+        resHighg = [];
+        resMedg = [];
+        resLowg = [];
+        
+        resHighs = [];
+        resMeds = [];
+        resLows = [];
+        
+        resHighw = [];
+        resMedw = [];
+        resLoww = [];
+        
+        allEntries = document.getElementsByClassName("itemLabel");
+        for(var i=0; i < allEntries.length; i++){
+            if (allEntries[i].id == "high") {
+                if (allEntries[i].name == "New Test.") {
+                    resHighg.push(allEntries[i].innerText);
+                }
+                if (allEntries[i].name == "Android") {
+                    resHighs.push(allEntries[i].innerText);
+                }
+                if (allEntries[i].name == "Programming Languages") {
+                    resHighw.push(allEntries[i].innerText);
+                }
+            }
+            if (allEntries[i].id == "med") {
+                if (allEntries[i].name == "New Test."){
+                    resMedg.push(allEntries[i].innerText);
+                }
+                if (allEntries[i].name == "Android"){
+                    resMeds.push(allEntries[i].innerText);
+                }
+                if (allEntries[i].name == "Programming Languages"){
+                    resMedw.push(allEntries[i].innerText);
+                }
+            }
+            if (allEntries[i].id == "low") {
+                if (allEntries[i].name == "New Test."){
+                    resLowg.push(allEntries[i].innerText);
+                }
+                if (allEntries[i].name == "Android"){
+                    resLows.push(allEntries[i].innerText);
+                }
+                if (allEntries[i].name == "Programming Languages"){
+                    resLoww.push(allEntries[i].innerText);
+                }
+            }
+        }
+        //prints to console
+        console.log(resHighg);
+        console.log(resMedg);
+        console.log(resLowg);
+        
+        console.log(resHighs);
+        console.log(resMeds);
+        console.log(resLows);
+        
+        console.log(resHighw);
+        console.log(resMedw);
+        console.log(resLoww);
+        
+        //store the arrays in localStorage
+        localStorage.setItem("todoHighg",JSON.stringify(resHighg))
+        localStorage.setItem("todoMedg",JSON.stringify(resMedg))
+        localStorage.setItem("todoLowg",JSON.stringify(resLowg))
+        
+        localStorage.setItem("todoHighs",JSON.stringify(resHighs))
+        localStorage.setItem("todoMeds",JSON.stringify(resMeds))
+        localStorage.setItem("todoLows",JSON.stringify(resLows))
+        
+        localStorage.setItem("todoHighw",JSON.stringify(resHighw))
+        localStorage.setItem("todoMedw",JSON.stringify(resMedw))
+        localStorage.setItem("todoLoww",JSON.stringify(resLoww))
+    };
+    
+    localLoad = function() {
+        allHighg = localStorage.getItem("todoHighg");
+        allMedg = localStorage.getItem("todoMedg");
+        allLowg = localStorage.getItem("todoLowg");
+        
+        allHighs = localStorage.getItem("todoHighs");
+        allMeds = localStorage.getItem("todoMeds");
+        allLows = localStorage.getItem("todoLows");
+        
+        allHighw = localStorage.getItem("todoHighw");
+        allMedw = localStorage.getItem("todoMedw");
+        allLoww = localStorage.getItem("todoLoww");
+        
+        loadHighg = [];
+        loadMedg = [];
+        loadLowg = [];
+        
+        loadHighs = [];
+        loadMeds = [];
+        loadLows = [];
+        
+        loadHighw = [];
+        loadMedw = [];
+        loadLoww = [];
+        
+        loadHighg = JSON.parse(allHighg);
+        loadMedg = JSON.parse(allMedg);
+        loadLowg = JSON.parse(allLowg);
+        
+        loadHighs = JSON.parse(allHighs);
+        loadMeds = JSON.parse(allMeds);
+        loadLows = JSON.parse(allLows);
+        
+        loadHighw = JSON.parse(allHighw);
+        loadMedw = JSON.parse(allMedw);
+        loadLoww = JSON.parse(allLoww);
+        
+        for(var i=0; i < loadHighg.length; i++){
+            addNew("high", loadHighg[i], 'New Test.');
+        };
+            
+        for(var i=0; i < loadMedg.length; i++){
+            addNew("med", loadMedg[i], 'New Test.');
+        };
+            
+        for(var i=0; i < loadLowg.length; i++){
+            addNew("low", loadLowg[i], 'New Test.');
+        };
+        
+        for(var i=0; i < loadHighs.length; i++){
+            addNew("high", loadHighs[i], 'Android');
+        };
+            
+        for(var i=0; i < loadMeds.length; i++){
+            addNew("med", loadMeds[i], 'Android');
+        };
+            
+        for(var i=0; i < loadLows.length; i++){
+            addNew("low", loadLows[i], 'Android');
+        };
+        
+        for(var i=0; i < loadHighw.length; i++){
+            addNew("high", loadHighw[i], 'Programming Languages');
+        };
+            
+        for(var i=0; i < loadMedw.length; i++){
+            addNew("med", loadMedw[i], 'Programming Languages');
+        };
+            
+        for(var i=0; i < loadLoww.length; i++){
+            addNew("low", loadLoww[i], 'Programming Languages');
+        };
+    };
+    
+    toggle = function(txt) {
+        item = document.getElementById(txt)
+        if(item.style.display != 'none'){
+            item.style.display = 'none';
+        }
+        else{
+            item.style.display = '';
+        }
+    }
+        
+</script>
+
+</head>
+
+<body onload = "localLoad()">
+
+<section>
+<box>
+    <New Test. id = "New Test.">
+        <b style = "color: #747474">New Test.</b><br>
+        <ul name = "lst" style = "position: relative;">
+        </ul>
+    </New Test.>
+    <Android id = "Android">
+        <b style = "color: #747474">Android</b><br>
+        <ul name = "lst" style = "position: relative;">
+        </ul>
+    </Android>
+    <Programming Languages id = "Programming Languages">
+        <b style = "color: #747474">Programming Languages</b><br>
+        <ul name = "lst" style = "position: relative;">
+        </ul>
+    </Programming Languages>
+</box>
+
+<entry>
+<h1>Michael's<br>To-Do list</h1>
+
+<hr>
+
+<input type = "text" id = "newTask" name = "newTask" placeholder = "Enter a new task!"><br>
+    
+
+<subE>
+Importance:
+<form action="">
+<input type = "radio" name = "option" value = "high" onclick = "{text = document.getElementById('newTask').value} {lst = document.getElementById('listSet').value} addNew(this.value,text,lst)"><text id = "high">High</text><br>
+<input type = "radio" name = "option" value = "med" onclick = "{text = document.getElementById('newTask').value} {lst = document.getElementById('listSet').value} addNew(this.value,text,lst)"><text id = "med">Medium</text><br>
+<input type = "radio" name = "option" value = "low" onclick = "{text = document.getElementById('newTask').value} {lst = document.getElementById('listSet').value} addNew(this.value,text,lst)"><text id = "low">Low</text>
+</form>
+
+<b>Which List do you want to add this to?</b><br>
+<select name = "listSet" id = "listSet">
+    <option value= "New Test.">New Test.</option>
+    <option value= "Android">Android</option>
+    <option value= "Programming Languages">Programming Languages</option>
+</select>
+    
+</subE>
+<hr>
+How to:
+<hr>
+Enter the value above<br>
+then click the level<br>
+of importance.<br><br>
+<b>Profit</b>
+
+</entry>
+    
+<div>
+<b>Which List do you want to display?</b><br>
+<!--
+<select name = "listSelector" id = "select">
+    <option value= "all">All Items</option>
+    <option value= "Android">Android</option>
+    <option value= "Programming Languages">Programming Languages</option>
+    <option value= "New Test.">New Test.</option>
+</select>
+-->
+
+<button onclick = "toggle('New Test.')">New Test.</button>
+<button onclick = "toggle('Android')">Android</button>
+<button onclick = "toggle('Programming Languages')">Programming Languages</button>
+</div>
+
+</section>
+
+</body>
+
+</html>
